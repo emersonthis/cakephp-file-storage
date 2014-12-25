@@ -8,6 +8,7 @@
  */
 App::uses('Model', 'Model');
 App::uses('UploadValidatorBehavior', 'FileStorage.Model\Behavior');
+App::uses('ImageStorage', 'FileStorage.Model');
 
 /**
  * TheVoid class
@@ -29,6 +30,49 @@ class VoidUploadModel extends CakeTestModel {
 	 * @var bool false
 	 */
 	public $useTable = false;
+}
+
+
+class ImageStorageCakeTestModel extends CakeTestModel {
+
+    public $actsAs = array(
+        'Imagine.Imagine',
+        'FileStorage.UploadValidator' => array(
+            'localFile' => true,
+            'validate' => false,
+            'allowedExtensions' => array('png', 'jpeg', 'jpg', 'gif')
+        ),
+    );
+
+	/**
+	 * name property
+	 *
+	 * @var string 'TheVoid'
+	 */
+	public $name = 'ImageStorageCakeTestModel';
+
+	/**
+	 * useTable property
+	 *
+	 * @var bool false
+	 */
+	public $useTable = false;
+}
+
+/**
+ * TheVoid class
+ *
+ * @package       Cake.Test.Case.Model
+ */
+class VoidImageStorageModel extends ImageStorageCakeTestModel {
+
+	/**
+	 * name property
+	 *
+	 * @var string 'TheVoid'
+	 */
+	public $name = 'VoidImageStorageModel';
+
 }
 
 /**
@@ -58,7 +102,7 @@ class UploadValidatorBehaviorTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
-		$this->Model = new VoidUploadModel();
+		$this->Model = new VoidImageStorageModel();
 		$this->Model->Behaviors->load('FileStorage.UploadValidator', array(
 			'localFile' => true));
 		$this->FileUpload = $this->Model->Behaviors->UploadValidator;
